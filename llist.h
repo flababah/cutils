@@ -25,18 +25,21 @@ struct dllist {
 #define dllist_prev(ptr, member) \
 		__container_of(ptr->member.prev, __typeof__(*ptr), member)
 
+#define dllist_next_type(ptr, type, member) \
+		__container_of((ptr)->next, type, member)
+
+#define dllist_prev_type(ptr, type, member) \
+		__container_of((ptr)->prev, type, member)
 
 // Forward iteration excluding the head element.
 #define for_dllist_iter(ptr, head_ptr, member) \
-		for (ptr = __container_of((head_ptr)->next, \
-				__typeof__(*ptr), member); \
+		for (ptr = dllist_next_type((head_ptr), __typeof__(*ptr), member); \
 		     &ptr->member != (head_ptr); \
 		     ptr = dllist_next(ptr, member))
 
 // Reverse iteration excluding the head element.
 #define for_dllist_iter_reverse(ptr, head_ptr, member) \
-		for (ptr = __container_of((head_ptr)->prev, \
-				__typeof__(*ptr), member); \
+		for (ptr = dllist_prev_type((head_ptr), __typeof__(*ptr), member); \
 		     &ptr->member != (head_ptr); \
 		     ptr = dllist_prev(ptr, member))
 

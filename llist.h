@@ -46,6 +46,12 @@ static inline void __assert_dllist(struct dllist *list)
 	assert(list->prev);
 }
 
+static inline int dllist_empty(struct dllist *list)
+{
+	__assert_dllist(list);
+	return list->next == list;
+}
+
 static inline void dllist_init(struct dllist *list)
 {
 	list->prev = list;

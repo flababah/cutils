@@ -30,6 +30,10 @@ static inline void __assert_dllist(struct dllist *link)
 	assert(link->prev->next == link);
 }
 
+#ifndef offsetof
+	#define offsetof __builtin_offsetof
+#endif
+
 #define __container_of(ptr, T, member) \
 		((T *)((void *)(ptr) - offsetof(T, member)))
 

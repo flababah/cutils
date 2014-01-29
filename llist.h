@@ -38,12 +38,12 @@ static inline void __assert_dllist(struct dllist *link)
 		((T *)((void *)(ptr) - offsetof(T, member)))
 
 #define dllist_next(ptr, member) ({ \
-		__assert_dllist(&ptr->member); \
-		__container_of(ptr->member.next, __typeof__(*ptr), member); })
+		__assert_dllist(&(ptr)->member); \
+		__container_of((ptr)->member.next, __typeof__(*(ptr)), member); })
 
 #define dllist_prev(ptr, member) ({ \
-		__assert_dllist(&ptr->member); \
-		__container_of(ptr->member.prev, __typeof__(*ptr), member); })
+		__assert_dllist(&(ptr)->member); \
+		__container_of((ptr)->member.prev, __typeof__(*(ptr)), member); })
 
 // If head is not located in the same type as ptr.
 #define dllist_next_type(ptr, type, member) ({ \
